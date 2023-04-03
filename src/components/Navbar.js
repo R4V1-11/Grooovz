@@ -3,11 +3,12 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import './HeroSection.js';
+import { useLocation } from 'react-router-dom';
 
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
-
+  const location = useLocation();
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
@@ -27,6 +28,7 @@ function Navbar() {
 
   return (
     <>
+    {location.pathname !== '/grooovz' && (
       <nav className='navbar'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
@@ -63,7 +65,7 @@ function Navbar() {
           </ul>
           {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
         </div>
-      </nav>
+      </nav>)}
     </>
   );
 }
