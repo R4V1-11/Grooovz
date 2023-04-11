@@ -45,6 +45,16 @@ async function findUserByUsername(username) {
   }
 }
 
+async function findUserByemail(email){
+  try{
+    const Email = await User.findOne({email:email});
+    return Email;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+}
+
 async function checkPassword(password, hash) {
   try{
     const match = await bcrypt.compare(password,hash);
@@ -62,9 +72,14 @@ app.post('/api/users', async (req, res) => {
   try {
     // Check if the username already exists
     const existingUser = await findUserByUsername(username);
+    const existingemail = await findUserByemail(email);
+    if(existingemail){
+      return res.status(409).json({status: 'error', message: 'Email already in use'});
+    }
     if (existingUser) {
       return res.status(409).json({ status: 'error', message: 'Username already exists' });
     }
+    
     const saltRounds = 10
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const user = new User({ username, password: hashedPassword, email });

@@ -29,7 +29,7 @@ function LoginForm() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/login2", {
+      const response = await fetch("http://10.24.72.200:5000/api/login2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

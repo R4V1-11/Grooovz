@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import './SignUpForm.css';
@@ -7,6 +7,8 @@ import videobf from '../assets/signupbg2.mp4'
 
 function SignUpForm() {
   const navigate = useNavigate();
+  const [signinError, setSigninError] = useState('');
+  
   async function handleSubmit(event) {
     event.preventDefault();
     const form = event.target;
@@ -44,10 +46,12 @@ function SignUpForm() {
       });
   
       if (response.status === 201) {
-        alert('User created successfully');
+        //alert('User created successfully');
         navigate('/grooovz');
       } else if (response.status === 409) {
-        alert('Username already exists');
+        //alert('Username already exists');
+        const data = await response.json();
+        setSigninError(data.message);
         return;
       } else {
         alert('Failed to create user');
@@ -111,6 +115,7 @@ function SignUpForm() {
       existing user?
     </Link>{' '}
   </p>
+  {signinError && <p className="error-message">{signinError}</p>}
   
 </form>
 
