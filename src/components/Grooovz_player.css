@@ -197,6 +197,33 @@
     justify-content: center;
     
   }
+
+  .search-input
+  {
+      display: block;
+      margin: 20px auto 0;
+      width: 300px;
+      padding: 12px;
+      border: 1px solid black;
+  }
+
+  .search-results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .search-result-item {
+    flex-basis: calc(33.33% - 20px);
+    /* additional styles for each search result item */
+  }
+  
+  /* Media Query for Mobile */
+  @media (max-width: 767px) {
+    .search-result-item {
+      flex-basis: 100%;
+    }
+  }
   
   
   

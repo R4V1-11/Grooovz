@@ -19,17 +19,42 @@ function Grooovz_player() {
   const [play, setPlay] = useState(false);
   const [audio, setAudio] = useState(new Audio());
 
-
-  function pauseTrack(trackId) {
-    const track = searchResults.find((t) => t.id === trackId);
-    if (track && track.audio) {
-      track.audio.pause();
-    }
+  const searchSong = (query) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'c7d3fd8ef1mshf2f9a69b487015ap14e363jsn91d71f5e575f',
+        'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+      }
+    };
+  
+    fetch(`https://deezerdevs-deezer.p.rapidapi.com/search?q=${query}`, options)
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        const songs = response.data;
+        setSearchResults(songs); // Update search results state with retrieved songs
+      })
+      .catch(err => console.error(err));
   };
 
+  const playSong = (previewUrl) => {
+    const audio = new Audio(previewUrl);
+    audio.play();
+  };
   
-
- return (
+  const handleSearchInputChange = (event) => {
+    const query = event.target.value;
+    setSearchTerm(query);
+  };
+  
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchSong(searchTerm);
+    }
+  };
+  
+  return (
     <>
       {(location.pathname !== '/sign-up' || location.pathname !== '/login' || location.pathname !== '/') ? (
         <div>
@@ -61,45 +86,35 @@ function Grooovz_player() {
               </ul>
             </div>
           </nav>
-          
-          <div className="track-container">
-            {searchResults.map((track) => (
-              <div key={track.id} className="track-item">
-                <img src={track.album.cover_small} alt={track.title} className="track-item-img" />
-                <div className="track-item-info">
-                  <p className="track-item-title">{track.title}</p>
-                  <p className="track-item-artist">{track.artist.name}</p>
-                </div>
-                <div className="playbar">
-                  {currentTrack && currentTrack.id === track.id && (
-                    <Icon
-                      path={play ? mdiPause : mdiPlay}
-                      size={1}
-                      className="track-item-play-pause"
-                      onClick={() => setPlay(!play)}
-                    />
-                  )}
-                  {currentTrack && currentTrack.id !== track.id && (
-                    <Icon
-                      path={mdiPlay}
-                      size={1}
-                      className="track-item-play-pause"
-                      onClick={() => {
-                        pauseTrack(currentTrack.id);
-                        setCurrentTrack(track);
-                        setPlay(true);
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
+          <div className="search-container">
+              <input
+                    type="search"
+                    className="search-input"
+                    placeholder="Search for songs..."
+                    value={searchTerm}
+                    onChange={handleSearchInputChange}
+                    onKeyPress={handleSearchInputKeyPress}
+              />
+              <ul className="search-results">
+            {searchResults.map((song) => (
+              <li key={song.id} className="search-result-item">
+                <h1 className="search-result-title">{song.title}</h1>
+                <p>Artist: {song.artist.name}</p>
+                <p>Album: {song.album.title}</p>
+                <img src={song.album.cover_medium} alt="Album Cover"></img>
+                <audio src={song.preview} controls></audio>
+              </li>
             ))}
-          </div>
-          
-        </div>
-      ) : null}
-    </>
-  );
-}
-
-export default Grooovz_player;
+          </ul>
+                            </div>
+                          <div className="playbar-container">
+                            <PlayBar />
+                          </div>
+                        </div>
+                      ) : null}
+                    </>
+                  );
+                }
+                
+                export default Grooovz_player;
+                

@@ -1,4 +1,4 @@
-const searchInput = document.createElement('input');
+/*const searchInput = document.createElement('input');
 searchInput.type = "search";
 searchInput.placeholder = "Search for a song...";
 searchInput.style.display = "block";
@@ -13,7 +13,7 @@ const songsContainer = document.createElement('div'); // Use a container to hold
 document.body.appendChild(songsContainer);
 
 // Function to fetch song data
-export const searchSong = (query) => { // Update function name to reflect plural 'searchSongs'
+const searchSong = (query) => { // Update function name to reflect plural 'searchSongs'
 	const options = {
 		method: 'GET',
 		headers: {
@@ -71,4 +71,4 @@ searchInput.addEventListener('keydown', (event) => {
 		const query = event.target.value;
 		searchSong(query);
 	}
-});
+});*/
