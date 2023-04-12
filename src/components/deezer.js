@@ -1,4 +1,11 @@
 const searchInput = document.createElement('input');
+searchInput.type = "search";
+searchInput.placeholder = "Search for a song...";
+searchInput.style.display = "block";
+searchInput.style.margin = "20px auto 0";
+searchInput.style.width = "300px";
+searchInput.style.padding = "12px";
+searchInput.style.border = "1px solid black";
 searchInput.type = 'text';
 document.body.appendChild(searchInput);
 
