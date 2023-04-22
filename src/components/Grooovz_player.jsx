@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './Grooovz_player.css';
 import { Link } from 'react-router-dom';
-import Icon from '@mdi/react';
-import { mdiPlay, mdiPause } from '@mdi/js';
 import { useLocation } from 'react-router-dom';
-import { searchSong} from './deezer';
-import PlayBar from './playbar.js';
+import Playbar from './playbar'
 
 function Grooovz_player() {
   const [click, setClick] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [play, setPlay] = useState(false);
+  const [playbar,setPlaybar] = useState(true);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-  const [currentTrack, setCurrentTrack] = useState(null);
-  const [play, setPlay] = useState(false);
-  const [audio, setAudio] = useState(new Audio());
 
   const searchSong = (query) => {
     const options = {
@@ -27,33 +24,67 @@ function Grooovz_player() {
         'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
       }
     };
-  
+
     fetch(`https://deezerdevs-deezer.p.rapidapi.com/search?q=${query}`, options)
       .then(response => response.json())
       .then(response => {
         console.log(response);
-        const songs = response.data;
+        const songs = response.data.map(song => ({ ...song, play: false }));
         setSearchResults(songs); // Update search results state with retrieved songs
       })
       .catch(err => console.error(err));
   };
 
-  const playSong = (previewUrl) => {
-    const audio = new Audio(previewUrl);
-    audio.play();
-  };
-  
   const handleSearchInputChange = (event) => {
     const query = event.target.value;
     setSearchTerm(query);
   };
-  
+
   const handleSearchInputKeyPress = (event) => {
     if (event.key === 'Enter') {
       searchSong(searchTerm);
     }
   };
-  
+  const [audio, setAudio] = useState(new Audio());
+  const handleSearchResultClick = (track) => {
+    console.log(track)
+    
+    let currentTrack = track;
+    setCurrentTrack(track);
+    
+    if(play === false){
+      audio.src = currentTrack?.preview; 
+      console.log("in play")
+      audio.play();
+      setPlay(true)
+  }
+    else
+    { 
+      console.log("in pause")
+      audio.pause(currentTrack);
+      setPlay(false)
+    }
+    
+  };
+
+  const handleAddToQueue = (song) => {
+    // Implement your logic for adding the song to the queue
+    console.log('Adding to queue:', song);
+  };
+
+  /* const audio = new Audio(currentTrack?.preview);
+  audio.play();
+ */
+  // Add an event listener for when the audio finishes playing
+  /* audio.addEventListener('ended', () => {
+    setCurrentTrack(null);
+    setPlay(false);
+  }); */
+  useEffect(() => {
+    if (currentTrack) {
+      setPlaybar(true);
+    }
+  }, [currentTrack]);
   return (
     <>
       {(location.pathname !== '/sign-up' || location.pathname !== '/login' || location.pathname !== '/') ? (
@@ -74,47 +105,80 @@ function Grooovz_player() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/account" className="nav-links" onClick={closeMobileMenu}>
-                    Account
+                  <Link to="/grooovz/playlist" className="nav-links" onClick={closeMobileMenu}>
+                    Playlist
                   </Link>
                 </li>
-                <li>
-                  <Link to="/library" className="nav-links-mobile" onClick={closeMobileMenu}>
-                    Library
+                <li className="nav-item">
+                  <Link to="/grooovz/favorites" className="nav-links" onClick={closeMobileMenu}>
+                    Favorites
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/grooovz/settings" className="nav-links" onClick={closeMobileMenu}>
+                    Settings
                   </Link>
                 </li>
               </ul>
             </div>
           </nav>
-          <div className="search-container">
-              <input
-                    type="search"
-                    className="search-input"
-                    placeholder="Search for songs..."
-                    value={searchTerm}
-                    onChange={handleSearchInputChange}
-                    onKeyPress={handleSearchInputKeyPress}
+          <div className="grooovz-player-container">
+            <div className="grooovz-player">
+              <div className="search-bar">
+                <input
+                  type="text"
+                  placeholder="Search songs..."
+                  className="search-input"
+                  value={searchTerm}
+                  onChange={handleSearchInputChange}
+                  onKeyPress={handleSearchInputKeyPress}
+                />
+              </div>
+              <div className="search-results">
+                {searchResults.map((track) => (
+                  <div className="search-result" key={track.id}>
+                    <img src={track.album.cover_medium} alt={track.title} className="search-result-img" />
+                    <div className="search-result-info">
+                      <p className="search-result-title">{track.title}</p>
+                      <p className="search-result-artist">{track.artist.name}</p>
+                    </div>
+                    <div className="search-result-controls">
+                      <button
+                          className="search-result-control-btn"
+                          onClick={() => handleSearchResultClick(track)}
+                        >
+                          <i className="fas fa-play"></i>
+                        </button>
+                      <button
+                        className="search-result-control-btn"
+                        onClick={() => handleAddToQueue(track)}
+                      >
+                        <i className="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              { currentTrack && playbar && (
+              <div className='playbar'>
+              
+               < Playbar
+                songTitle={currentTrack ? currentTrack.title : ''}
+                artist={currentTrack ? currentTrack.artist.name : ''}
+                onPlay={() => handleSearchResultClick(currentTrack)}
+                onPause={() => handleSearchResultClick(currentTrack)}
               />
-              <ul className="search-results">
-            {searchResults.map((song) => (
-              <li key={song.id} className="search-result-item">
-                <h1 className="search-result-title">{song.title}</h1>
-                <p>Artist: {song.artist.name}</p>
-                <p>Album: {song.album.title}</p>
-                <img src={song.album.cover_medium} alt="Album Cover"></img>
-                <audio src={song.preview} controls></audio>
-              </li>
-            ))}
-          </ul>
-                            </div>
-                          <div className="playbar-container">
-                            <PlayBar />
-                          </div>
-                        </div>
-                      ) : null}
-                    </>
-                  );
-                }
-                
-                export default Grooovz_player;
-                
+               </div>)}
+          </div>
+            
+          </div>
+        </div>
+      ) : (
+        null
+      )}
+    </>
+  );
+}
+
+export default Grooovz_player;
+

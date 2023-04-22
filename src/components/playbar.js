@@ -1,22 +1,15 @@
 import React from 'react';
-import Icon from '@mdi/react';
-import { mdiPlay, mdiPause } from '@mdi/js';
 
-const PlayBar = ({ play, onPlayPauseClick }) => {
+function Playbar({ songTitle, artist }) {
   return (
-    <div className="play-bar" style={{ backgroundColor: 'black', position: 'fixed', bottom: 0, left: 0, right: 0 }}>
-      <div className="controller">
-        <div>
-          <progress value="0" max="100"></progress>
-        </div>
-        <div>
-          <button className="Play-Button" onClick={onPlayPauseClick}>
-            <Icon path={play ? mdiPause : mdiPlay} size={1} />
-          </button>
-        </div>
+    <div className="playbar-container">
+      <div className="playbar-song-info">
+        <p className="playbar-song-title">{songTitle}</p>
+        <p className="playbar-song-artist">{artist}</p>
       </div>
+      {/* ... other playbar components ... */}
     </div>
   );
-};
+}
 
-export default PlayBar;
+export default Playbar;

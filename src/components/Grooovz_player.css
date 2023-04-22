@@ -211,16 +211,19 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    
   }
   
-  .search-result-item {
+  .search-result {
     flex-basis: calc(33.33% - 20px);
     /* additional styles for each search result item */
+    border: solid;
+    border-width: 1px;
   }
   
   /* Media Query for Mobile */
   @media (max-width: 767px) {
-    .search-result-item {
+    .search-result {
       flex-basis: 100%;
     }
   }
