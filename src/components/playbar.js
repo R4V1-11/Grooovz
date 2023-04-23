@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './playbar.css';
+import Icon from '@mdi/react';
+import { mdiPlayCircle, mdiPauseCircle } from '@mdi/js';
 
-function Playbar({ songTitle, artist }) {
+function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying }) {
+  
+
+  const handlePlay = () => {
+     onPlay(); // Call the onPlay prop function
+  };
+
+  const handlePause = () => {
+     onPause(); // Call the onPause prop function
+  };
+
   return (
     <div className="playbar-container">
       <div className="playbar-song-info">
+        <img className='playbar-song-image' src={songImage} alt="Album cover of the current song" />
         <p className="playbar-song-title">{songTitle}</p>
         <p className="playbar-song-artist">{artist}</p>
       </div>
-      {/* ... other playbar components ... */}
+      <div className="playbar-controls">
+        {isPlaying ? (
+          <Icon path={mdiPauseCircle} size={1} onClick={handlePause} /> // Use handlePause for pause button
+        ) : (
+          <Icon path={mdiPlayCircle} size={1} onClick={handlePlay} /> // Use handlePlay for play button
+        )}
+        {/* Add other playbar control buttons as needed */}
+      </div>
     </div>
   );
 }

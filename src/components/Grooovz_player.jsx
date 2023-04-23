@@ -45,7 +45,9 @@ function Grooovz_player() {
       searchSong(searchTerm);
     }
   };
+
   const [audio, setAudio] = useState(new Audio());
+  
   const handleSearchResultClick = (track) => {
     console.log(track)
     
@@ -61,25 +63,16 @@ function Grooovz_player() {
     else
     { 
       console.log("in pause")
-      audio.pause(currentTrack);
+      audio.pause();
       setPlay(false)
     }
     
   };
 
   const handleAddToQueue = (song) => {
-    // Implement your logic for adding the song to the queue
-    console.log('Adding to queue:', song);
+  console.log('Adding to queue:', song);
   };
 
-  /* const audio = new Audio(currentTrack?.preview);
-  audio.play();
- */
-  // Add an event listener for when the audio finishes playing
-  /* audio.addEventListener('ended', () => {
-    setCurrentTrack(null);
-    setPlay(false);
-  }); */
   useEffect(() => {
     if (currentTrack) {
       setPlaybar(true);
@@ -148,7 +141,7 @@ function Grooovz_player() {
                           onClick={() => handleSearchResultClick(track)}
                         >
                           <i className="fas fa-play"></i>
-                        </button>
+                      </button>
                       <button
                         className="search-result-control-btn"
                         onClick={() => handleAddToQueue(track)}
@@ -162,9 +155,11 @@ function Grooovz_player() {
               { currentTrack && playbar && (
               <div className='playbar'>
               
-               < Playbar
+               <Playbar
+                songImage={currentTrack ? currentTrack.album.cover_medium : 'no image'}
                 songTitle={currentTrack ? currentTrack.title : ''}
                 artist={currentTrack ? currentTrack.artist.name : ''}
+                isPlaying = {play}
                 onPlay={() => handleSearchResultClick(currentTrack)}
                 onPause={() => handleSearchResultClick(currentTrack)}
               />

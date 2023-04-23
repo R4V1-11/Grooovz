@@ -1,0 +1,20 @@
+.playbar-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .playbar-song-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .playbar-song-image {
+    width: 50px; /* adjust size as needed */
+    height: 50px; /* adjust size as needed */
+    margin-right: 10px; /* add spacing between image and details */
+  }
+  
+  .playbar-song-details {
+    display: flex;
+    flex-direction: column;
+  }
