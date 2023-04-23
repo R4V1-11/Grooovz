@@ -47,27 +47,32 @@ function Grooovz_player() {
   };
 
   const [audio, setAudio] = useState(new Audio());
+  const [currentTrackTime, setCurrentTrackTime] = useState(0);
   
+  
+
   const handleSearchResultClick = (track) => {
-    console.log(track)
-    
-    let currentTrack = track;
-    setCurrentTrack(track);
-    
-    if(play === false){
-      audio.src = currentTrack?.preview; 
-      console.log("in play")
+    if (currentTrack !== track) {
+      let currentTrackTime=0 
+      console.log(currentTrackTime);
+      setCurrentTrack(track);
+    } 
+  
+    if (play === false) {
+      audio.src = track?.preview;
+      audio.currentTime = currentTrackTime; // Set current track time
       audio.play();
-      setPlay(true)
-  }
-    else
-    { 
-      console.log("in pause")
+      setPlay(true);
+    } else {
       audio.pause();
-      setPlay(false)
+      setCurrentTrackTime(audio.currentTime); // Store current track time
+      setPlay(false);
     }
-    
   };
+  
+  
+  
+  
 
   const handleAddToQueue = (song) => {
   console.log('Adding to queue:', song);
