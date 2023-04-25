@@ -3,6 +3,9 @@ import './Grooovz_player.css';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Playbar from './playbar'
+import Icon from '@mdi/react';
+import { mdiPlaylistMusic,mdiPlus } from '@mdi/js';
+
 
 function Grooovz_player() {
   const [click, setClick] = useState(false);
@@ -49,31 +52,34 @@ function Grooovz_player() {
   const [audio, setAudio] = useState(new Audio());
   const [currentTrackTime, setCurrentTrackTime] = useState(0);
   
-  
-
   const handleSearchResultClick = (track) => {
     if (currentTrack !== track) {
-      let currentTrackTime=0 
-      console.log(currentTrackTime);
+      setCurrentTrackTime(0); // Reset current track time to 0 when clicking on a new track
       setCurrentTrack(track);
-    } 
-  
+    }
     if (play === false) {
       audio.src = track?.preview;
       audio.currentTime = currentTrackTime; // Set current track time
       audio.play();
       setPlay(true);
+      
     } else {
       audio.pause();
-      setCurrentTrackTime(audio.currentTime); // Store current track time
       setPlay(false);
     }
   };
   
+  // Update current track time while the track is playing
+  audio.addEventListener("timeupdate", () => {
+    setCurrentTrackTime(audio.currentTime);
+  });
   
+  const handleSliderChange = (value) => {
+    setCurrentTrackTime(value);
+    audio.currentTime = value;
   
+  }
   
-
   const handleAddToQueue = (song) => {
   console.log('Adding to queue:', song);
   };
@@ -135,38 +141,30 @@ function Grooovz_player() {
               <div className="search-results">
                 {searchResults.map((track) => (
                   <div className="search-result" key={track.id}>
-                    <img src={track.album.cover_medium} alt={track.title} className="search-result-img" />
+                    <img src={track.album.cover_medium} alt={track.title} className="search-result-img" onClick={() => handleSearchResultClick(track)} />
                     <div className="search-result-info">
                       <p className="search-result-title">{track.title}</p>
                       <p className="search-result-artist">{track.artist.name}</p>
                     </div>
                     <div className="search-result-controls">
-                      <button
-                          className="search-result-control-btn"
-                          onClick={() => handleSearchResultClick(track)}
-                        >
-                          <i className="fas fa-play"></i>
-                      </button>
-                      <button
-                        className="search-result-control-btn"
-                        onClick={() => handleAddToQueue(track)}
-                      >
-                        <i className="fas fa-plus"></i>
-                      </button>
+                      <Icon className = "playlistIcon" path ={mdiPlaylistMusic} size={2} />
+                      <Icon className = "addqueueIcon" path ={mdiPlus} size={2} onClick ={()=>handleAddToQueue(track)}/>
                     </div>
                   </div>
                 ))}
               </div>
               { currentTrack && playbar && (
               <div className='playbar'>
-              
-               <Playbar
+              <Playbar
                 songImage={currentTrack ? currentTrack.album.cover_medium : 'no image'}
                 songTitle={currentTrack ? currentTrack.title : ''}
                 artist={currentTrack ? currentTrack.artist.name : ''}
                 isPlaying = {play}
                 onPlay={() => handleSearchResultClick(currentTrack)}
                 onPause={() => handleSearchResultClick(currentTrack)}
+                currentTrackTime={currentTrackTime}
+                setCurrentTrackTime={handleSliderChange}
+                duration={audio.duration}
               />
                </div>)}
           </div>

@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import './SignUpForm.css';
 import loginbg from '../assets/loginbg3.mp4';
 
-
-
 function LoginForm() {
 
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ function LoginForm() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://10.24.82.180:5000/api/login2", {
+      const response = await fetch("http://192.168.1.6:5000/api/login2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
