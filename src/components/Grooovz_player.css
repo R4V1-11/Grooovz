@@ -215,10 +215,14 @@
   }
   
   .search-result {
-    flex-basis: calc(33.33% - 20px);
+    flex-basis: calc(33.33% - 40px);
     /* additional styles for each search result item */
     border: solid;
     border-width: 1px;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: #242222;
   }
   
   /* Media Query for Mobile */
@@ -227,6 +231,26 @@
       flex-basis: 100%;
     }
   }
-  
-  
-  
+
+
+.groovz-player-container{
+  background-color: #242424;
+}
+
+.playlistIcon {
+  color: #fff;
+}
+
+.addqueueIcon {
+  color: #fff;
+}
+
+/* CSS for search result title */
+.search-result-title {
+  color: white;
+}
+
+/* CSS for search result artist */
+.search-result-artist {
+  color: white;
+}

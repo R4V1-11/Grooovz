@@ -1,20 +1,56 @@
 .playbar-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .playbar-song-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .playbar-song-image {
-    width: 50px; /* adjust size as needed */
-    height: 50px; /* adjust size as needed */
-    margin-right: 10px; /* add spacing between image and details */
-  }
-  
-  .playbar-song-details {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px;
+  /* Add any other styles you need */
+}
+
+.playbar-song-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  /* Add any other styles you need */
+}
+
+.playbar-song-image {
+  width: 40px; /* Update with desired image size */
+  height: 40px; /* Update with desired image size */
+  object-fit: cover; /* Ensure image covers the container */
+  margin-right: 8px; /* Add desired margin between image and text */
+  /* Add any other styles you need */
+}
+
+.playbar-song-title,
+.playbar-song-artist {
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis (...) for truncated text */
+  /* Add any other styles you need */
+}
+
+.playbar-controls {
+  display: flex;
+  align-items: center;
+  /* Update the styles to adjust the position of the current time and duration */
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.playbar-start-time,
+.playbar-duration {
+  /* Update the styles to adjust the position of the current time and duration */
+  margin: 0;
+}
+
+.playbar-slider {
+  flex-grow: 1; /* Allow slider to take up remaining space */
+  margin: 0 8px; /* Add desired margin between slider and other controls */
+  /* Add any other styles you need */
+}
+
+.playbar-duration,
+.playbar-start-time {
+  white-space: nowrap; /* Prevent text from wrapping */
+  /* Add any other styles you need */
+}
