@@ -35,11 +35,13 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, Cur
         <p className="playbar-song-artist">{artist}</p>
       </div>
       <div className="playbar-controls">
+        <div className='playpausebuttons'>
         {isPlaying ? (
-          <Icon path={mdiPauseCircle} size={2} onClick={handlePause} /> // Use handlePause for pause button
+          <Icon className = "playbutton" path={mdiPauseCircle} size={2} onClick={handlePause} /> // Use handlePause for pause button
         ) : (
-          <Icon path={mdiPlayCircle} size={2} onClick={handlePlay} /> // Use handlePlay for play button
+          <Icon className = "pausebutton" path={mdiPlayCircle} size={2} onClick={handlePlay} /> // Use handlePlay for play button
         )}
+        </div>
         
         <p className="playbar-start-time">{formatTime(CurrentTime)}</p> {/* Display formatted start time */}
           <input

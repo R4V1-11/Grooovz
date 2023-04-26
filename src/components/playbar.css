@@ -54,3 +54,10 @@
   white-space: nowrap; /* Prevent text from wrapping */
   /* Add any other styles you need */
 }
+
+.pausebuttton:hover{
+  color: green;
+}
+.playbutton:hover{
+    color: green;
+}

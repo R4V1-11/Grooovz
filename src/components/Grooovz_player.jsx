@@ -16,6 +16,7 @@ function Grooovz_player() {
   const [play, setPlay] = useState(false);
   const [playbar,setPlaybar] = useState(true);
   const [queue, setQueue] = useState([]);
+  const [message,showMessage] = useState(false)
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -73,6 +74,7 @@ function Grooovz_player() {
   // Update current track time while the track is playing
   audio.addEventListener("timeupdate", () => {
     setCurrentTrackTime(audio.currentTime);
+    console.log(currentTrackTime)
   });
   
   const handleSliderChange = (value) => {
@@ -82,8 +84,12 @@ function Grooovz_player() {
   }
   
   const handleAddToQueue = (song) => {
-    setQueue([...queue, song]);
+  setQueue([...queue, song]);
   console.log('Adding to queue:', song);
+  showMessage(true); // Set showMessage to true when "addToQueue" is clicked
+    setTimeout(() => {
+      showMessage(false); // Set showMessage back to false after a few seconds
+    }, 3000);
 
   };
 
@@ -219,6 +225,11 @@ function Grooovz_player() {
           </div>
             
           </div>
+          {showMessage && (
+        <div className="message">
+          Added to queue
+        </div>
+      )}
         </div>
       ) : (
         null
