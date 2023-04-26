@@ -3,7 +3,11 @@ import './playbar.css';
 import Icon from '@mdi/react';
 import { mdiPlayCircle, mdiPauseCircle } from '@mdi/js';
 
+<<<<<<< HEAD
 function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, CurrentTime, setCurrentTrackTime, duration }) {
+=======
+function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, CurrentTrackTime, setCurrentTrackTime, duration }) {
+>>>>>>> 8b5bd4a38006a2bea3712eb7c0a35109243547ae
   const handlePlay = () => {
     onPlay(); // Call the onPlay prop function
   };
@@ -19,9 +23,12 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, Cur
 
   // Helper function to format time in MM:SS format
   const formatTime = (time) => {
+<<<<<<< HEAD
     if (isNaN(time)) {
       return '0:00'; // Return a default value if time is not a valid number
     }
+=======
+>>>>>>> 8b5bd4a38006a2bea3712eb7c0a35109243547ae
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
@@ -41,6 +48,7 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, Cur
           <Icon path={mdiPlayCircle} size={2} onClick={handlePlay} /> // Use handlePlay for play button
         )}
         
+<<<<<<< HEAD
         <p className="playbar-start-time">{formatTime(CurrentTime)}</p> {/* Display formatted start time */}
           <input
           type="range"
@@ -48,6 +56,15 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, Cur
           min={CurrentTime}
           max={duration}
           value={CurrentTime}
+=======
+        <p className="playbar-start-time">{formatTime(CurrentTrackTime)}</p> {/* Display formatted start time */}
+          <input
+          type="range"
+          className="playbar-slider"
+          min={0}
+          max={duration}
+          value={CurrentTrackTime}
+>>>>>>> 8b5bd4a38006a2bea3712eb7c0a35109243547ae
           onChange={handleSliderChange}
           />
           <p className="playbar-duration">{formatTime(duration)}</p>

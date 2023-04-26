@@ -219,9 +219,12 @@
     /* additional styles for each search result item */
     border: solid;
     border-width: 1px;
+<<<<<<< HEAD
     margin-top: 20px;
     margin-left: 50px;
     margin-right: 50px;
+=======
+>>>>>>> 8b5bd4a38006a2bea3712eb7c0a35109243547ae
     background-color: #242222;
   }
   
