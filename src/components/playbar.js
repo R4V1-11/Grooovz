@@ -3,7 +3,7 @@ import './playbar.css';
 import Icon from '@mdi/react';
 import { mdiPlayCircle, mdiPauseCircle } from '@mdi/js';
 
-function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, CurrentTime, setCurrentTrackTime, duration }) {
+function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, currentTime, setCurrentTrackTime, duration }) {
   const handlePlay = () => {
     onPlay(); // Call the onPlay prop function
   };
@@ -20,11 +20,14 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, Cur
   // Helper function to format time in MM:SS format
   const formatTime = (time) => {
     if (isNaN(time)) {
+      //console.log("the current time was passed here");
       return '0:00'; // Return a default value if time is not a valid number
     }
+    //console.log('C time:', time);
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    
   };
 
   return (
@@ -43,16 +46,16 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, Cur
         )}
         </div>
         
-        <p className="playbar-start-time">{formatTime(CurrentTime)}</p> {/* Display formatted start time */}
-          <input
-          type="range"
-          className="playbar-slider"
-          min={0}
-          max={duration}
-          value={CurrentTime}
-          onChange={handleSliderChange}
-          />
-          <p className="playbar-duration">{formatTime(duration)}</p>
+        <p className="playbar-current-time">{formatTime(currentTime)}</p>
+        <input
+         type="range"
+         className="playbar-slider"
+         min={0}
+         max={duration}
+         value={currentTime}
+         onChange={handleSliderChange}
+        />
+<p className="playbar-duration">{formatTime(duration)}</p>
       </div>
     </div>
   );

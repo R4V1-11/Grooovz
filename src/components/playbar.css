@@ -1,15 +1,17 @@
 .playbar-container {
-  display: flex;
+  
   align-items: center;
   justify-content: flex-start;
   padding: 8px;
+  flex-direction: row;
   /* Add any other styles you need */
 }
 
 .playbar-song-info {
   display: flex;
-  align-items: center;
+  align-items: left;
   flex: 1;
+  justify-content: flex-start;
   /* Add any other styles you need */
 }
 
@@ -17,7 +19,8 @@
   width: 40px; /* Update with desired image size */
   height: 40px; /* Update with desired image size */
   object-fit: cover; /* Ensure image covers the container */
-  margin-right: 8px; /* Add desired margin between image and text */
+  margin-right: 8px;
+  justify-content: left; /* Add desired margin between image and text */
   /* Add any other styles you need */
 }
 
@@ -55,9 +58,10 @@
   /* Add any other styles you need */
 }
 
-.pausebuttton:hover{
+.pausebuttton:hover {
   color: green;
 }
-.playbutton:hover{
-    color: green;
+
+.playbutton:hover {
+  color: green;
 }

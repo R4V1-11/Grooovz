@@ -5,6 +5,8 @@ import { useLocation } from 'react-router-dom';
 import Playbar from './playbar'
 import Icon from '@mdi/react';
 import { mdiPlaylistMusic,mdiPlus } from '@mdi/js';
+import genres from './genres.json';
+
 
 
 function Grooovz_player() {
@@ -17,6 +19,12 @@ function Grooovz_player() {
   const [playbar,setPlaybar] = useState(true);
   const [queue, setQueue] = useState([]);
   const [message,showMessage] = useState(false)
+  
+
+  const handleGenreClick = (genre) => {
+    setSearchTerm(genre.name); // Set the search term to the name of the genre
+    searchSong(genre.name); // Search for the name of the genre
+  };
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -74,7 +82,7 @@ function Grooovz_player() {
   // Update current track time while the track is playing
   audio.addEventListener("timeupdate", () => {
     setCurrentTrackTime(audio.currentTime);
-    console.log(currentTrackTime)
+    console.log(currentTrackTime);
   });
   
   const handleSliderChange = (value) => {
@@ -113,6 +121,7 @@ function Grooovz_player() {
         }
       }
     });
+    
   
     // Clean up event listeners when component unmounts
     return () => {
@@ -147,7 +156,7 @@ function Grooovz_player() {
   return (
     <>
       {(location.pathname !== '/sign-up' || location.pathname !== '/login' || location.pathname !== '/') ? (
-        <div>
+        <div className='entire'>
           <nav className="navbar">
             <div className="navbar-container">
               <Link to="/grooovz" className="navbar-logo" onClick={closeMobileMenu}>
@@ -181,6 +190,7 @@ function Grooovz_player() {
               </ul>
             </div>
           </nav>
+          
           <div className="grooovz-player-container">
             <div className="grooovz-player">
               <div className="search-bar">
@@ -197,7 +207,7 @@ function Grooovz_player() {
                 {searchResults.map((track) => (
                   <div className="search-result" key={track.id}>
                     <img src={track.album.cover_medium} alt={track.title} className="search-result-img" onClick={() => handleSearchResultClick(track)} />
-                    <div className="search-result-info">
+                      <div className="search-result-info">
                       <p className="search-result-title">{track.title}</p>
                       <p className="search-result-artist">{track.artist.name}</p>
                     </div>
@@ -208,6 +218,17 @@ function Grooovz_player() {
                   </div>
                 ))}
               </div>
+          <div className="genres-container">
+           {genres.map((genre) => (
+            <div className="genre-card" key={genre.id}>
+            <img className="genre-image" src={require(`${genre.image}`)} alt="genre" onClick={() => handleGenreClick(genre)} />
+
+            <div className='genre-result-info'>
+              <p className='genre-name'>{genre.name}</p>
+            </div>
+          </div>
+           ))}
+          </div>
               { currentTrack && playbar && (
               <div className='playbar'>
               <Playbar
@@ -217,7 +238,7 @@ function Grooovz_player() {
                 isPlaying = {play}
                 onPlay={() => handleSearchResultClick(currentTrack)}
                 onPause={() => handleSearchResultClick(currentTrack)}
-                currentTrackTime={currentTrackTime}
+                currentTime={currentTrackTime}
                 setCurrentTrackTime={handleSliderChange}
                 duration={audio.duration}
               />
@@ -226,10 +247,10 @@ function Grooovz_player() {
             
           </div>
           {showMessage && (
-        <div className="message">
-          Added to queue
-        </div>
-      )}
+           <div className="message">
+             Added to queue
+           </div>
+          )}
         </div>
       ) : (
         null

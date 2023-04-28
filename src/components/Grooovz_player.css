@@ -1,3 +1,6 @@
+body{
+ background-color: #242222;
+}
 .navbar {
   background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
   height: 80px;
@@ -214,16 +217,23 @@
     margin-top: 20px;
     margin-left: 50px;
     margin-right: 50px;
+    margin-bottom: 100px;
     justify-content: center;
     
   }
   
   .search-result {
-    flex-basis: calc(33.33% - 40px);
+    flex-basis: calc(25% - 40px);
     border: solid;
-    border-width: 1px;
-    background-color: #242222;
+    border-width: 2px;
+    border-color: aliceblue;
+    background-color:black;
     justify-content: center;
+    border-radius: 10px;
+  }
+
+  .search-result:hover{
+    transform: scale(1.1);
   }
   
   /* Media Query for Mobile */
@@ -264,4 +274,43 @@
 .addqueueIcon:hover {
   transform: scale(1.1);
   color: green; 
+}
+
+.genre-card{
+  color: white;
+}
+
+.genres-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 100px;
+  justify-content: center;
+  
+}
+
+.genre-card {
+  flex-basis: calc(25% - 60px);
+  border: solid;
+  border-width: 2px;
+  border-color: aliceblue;
+  background-color:black;
+  justify-content: center;
+  border-radius: 10px;
+  
+}
+
+.genre-image {
+  align-items: center;
+  width: 200px; /* Set the width of the image */
+  height: 200px; /* Set the height of the image */
+  object-fit: cover;
+  display:flex
+}
+
+.genre-card:hover{
+  transform: scale(0.9);
 }
