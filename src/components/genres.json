@@ -1,5 +1,7 @@
-[  {    "id": 1,    "name": "ROCK",    "image": "./genre-images/rock.jpg"  },
+[  
+   {    "id": 1,    "name": "ROCK",    "image": "./genre-images/rock.jpg"  },
    {    "id": 2,    "name": "POP",    "image": "./genre-images/Pop.jpg"  },
    {    "id": 3,    "name": "HIP HOP",    "image": "./genre-images/hiphop.jpg"  },
    {    "id": 4,    "name": "ELECTRONIC",    "image": "./genre-images/electronic.jpg"  },
-   {    "id": 5,    "name": "CLASSICAL",    "image": "./genre-images/classical.jpg"  }]
+   {    "id": 5,    "name": "CLASSICAL",    "image": "./genre-images/classical.jpg"  }
+]

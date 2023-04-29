@@ -64,7 +64,8 @@ function Grooovz_player() {
   
   const handleSearchResultClick = (track) => {
     if (currentTrack !== track) {
-      setCurrentTrackTime(0); // Reset current track time to 0 when clicking on a new track
+      setCurrentTrackTime(0);
+      let currentTrackTime = 0; // Reset current track time to 0 when clicking on a new track
       setCurrentTrack(track);
     }
     if (play === false) {
@@ -82,7 +83,7 @@ function Grooovz_player() {
   // Update current track time while the track is playing
   audio.addEventListener("timeupdate", () => {
     setCurrentTrackTime(audio.currentTime);
-    console.log(currentTrackTime);
+    //console.log(currentTrackTime);
   });
   
   const handleSliderChange = (value) => {

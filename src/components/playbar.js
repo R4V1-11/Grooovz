@@ -1,7 +1,8 @@
-import React from 'react';
+import React  from 'react';
 import './playbar.css';
 import Icon from '@mdi/react';
 import { mdiPlayCircle, mdiPauseCircle } from '@mdi/js';
+import { useEffect } from 'react';
 
 function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, currentTime, setCurrentTrackTime, duration }) {
   const handlePlay = () => {
@@ -29,24 +30,20 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, cur
     return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
     
   };
-
+  useEffect(() => {
+    setCurrentTrackTime(0);
+  }, [songTitle]);
   return (
-    <div className="playbar-container">
+    <div className="playbar-container" >
       <div className="playbar-song-info">
-        <img className="playbar-song-image" src={songImage} alt="Album cover of the current song" />
-        <p className="playbar-song-title">{songTitle}</p>
-        <p className="playbar-song-artist">{artist}</p>
+         <div className="playbar-song-details">
+              <img className="playbar-song-image" src={songImage} alt="Album cover of the current song" />
+              <p className="playbar-song-title">{songTitle}</p>
+              <p className="playbar-song-artist">{artist}</p>
+         </div>
       </div>
       <div className="playbar-controls">
-        <div className='playpausebuttons'>
-        {isPlaying ? (
-          <Icon className = "playbutton" path={mdiPauseCircle} size={2} onClick={handlePause} /> // Use handlePause for pause button
-        ) : (
-          <Icon className = "pausebutton" path={mdiPlayCircle} size={2} onClick={handlePlay} /> // Use handlePlay for play button
-        )}
-        </div>
-        
-        <p className="playbar-current-time">{formatTime(currentTime)}</p>
+      <p className="playbar-current-time">{formatTime(currentTime)}</p>
         <input
          type="range"
          className="playbar-slider"
@@ -55,7 +52,15 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, cur
          value={currentTime}
          onChange={handleSliderChange}
         />
-<p className="playbar-duration">{formatTime(duration)}</p>
+       <p className="playbar-duration">{formatTime(duration)}</p>
+        
+        <div className='playpausebuttons'>
+        {isPlaying ? (
+          <Icon className = "playbutton" path={mdiPauseCircle} size={2} onClick={handlePause} /> // Use handlePause for pause button
+        ) : (
+          <Icon className = "pausebutton" path={mdiPlayCircle} size={2} onClick={handlePlay} /> // Use handlePlay for play button
+        )}
+        </div>
       </div>
     </div>
   );
