@@ -1,60 +1,78 @@
 .playbar-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 8px;
-}
-
-.playbar-columns {
-  display: flex;
-  flex-direction: column;
-  columns: 2;
-  column-gap: 20px;
-}
-
-.playbar-song-details {
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #000; /* Black background */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .playbar-song-details {
   display: flex;
   align-items: center;
-  margin-right: 10px;
-}
-
-.playbar-song-details img {
-  width: 40px;
-  height: 40px;
-  margin-right: 8px;
-}
-
-.playbar-song-details p {
+  gap: 16px;
+ }
+ 
+ .playbar-song-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+ }
+ 
+ .playbar-song-title,
+ .playbar-song-artist {
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.playbar-song-title,
-.playbar-song-artist {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.playbar-controls {
+  font-size: 16px;
+  color: #fff; /* White text */
+ }
+ 
+ .playbar-controls {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 8px;
-}
-
-.playbar-start-time,
-.playbar-duration {
-  margin: 0;
-}
-
-.playbar-slider {
+  gap: 16px;
+  right:20
+ }
+ 
+ .playbar-slider {
   flex-grow: 1;
   margin: 0 8px;
-}
-
-.playbar-duration,
-.playbar-start-time {
-  white-space: nowrap;
-}
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #ddd;
+  outline: none;
+ }
+ 
+ .playbar-song-text {
+  display:block
+ }
+ .playbar-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff; /* White slider thumb */
+  cursor: pointer;
+ }
+ 
+ .playbar-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff; /* White slider thumb */
+  cursor: pointer;
+ }
+ 
+ .playpausebuttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+ }
+ 
+ .playbutton,
+ .pausebutton {
+  cursor: pointer;
+  color: #fff; /* White icons */
+ }
+ 

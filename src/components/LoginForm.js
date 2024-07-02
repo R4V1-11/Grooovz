@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
-import '../App.css';
+
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './SignUpForm.css';
 import loginbg from '../assets/loginbg3.mp4';
+import Navbar from './Navbar';
 
-function LoginForm() {
-
+function LoginForm() 
+{
   const navigate = useNavigate();
-  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
@@ -27,7 +27,7 @@ function LoginForm() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://192.168.1.6:5000/api/login2", {
+      const response = await fetch("http://10.50.11.3:5000/api/login2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,6 +36,9 @@ function LoginForm() {
       });
 
       if (response.status === 200) {
+        const { token } = await response.json();
+        localStorage.setItem('token',token); 
+        console.log("item added to local storage")
         navigate("/grooovz");
       } else if (response.status === 401) {
         setLoginError("Invalid username or password");
@@ -51,10 +54,11 @@ function LoginForm() {
     }
   };
 
-  
     return (
+      <div>
+      <Navbar />
       <div className='signupform'>
-         <video src={loginbg} autoPlay loop muted id = "myVideo"/>
+        <video src={loginbg} autoPlay loop muted id = "myVideo"/>
         <h1>WELCOME BACK</h1>
         <form onSubmit={handleFormSubmit}>
           <label htmlFor="username" text-color='white'>Username</label>
@@ -66,8 +70,9 @@ function LoginForm() {
           {loginError && <p className="error-message">{loginError}</p>}
         </form>
       </div>
+      </div>
     );
-  }
+}
   
-  export default LoginForm;
+export default LoginForm;
 

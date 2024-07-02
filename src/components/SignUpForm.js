@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import './SignUpForm.css';
 import videobf from '../assets/signupbg2.mp4'
+import Navbar from './Navbar';
 
 
 function SignUpForm() {
@@ -33,7 +33,7 @@ function SignUpForm() {
     }
   
     try {
-      const response = await fetch('http://192.168.67.26:5000/api/users', {
+      const response = await fetch('http://10.50.11.3:5000/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ function SignUpForm() {
   
       if (response.status === 201) {
         //alert('User created successfully');
-        navigate('/grooovz');
+        navigate('/login');
       } else if (response.status === 409) {
         //alert('Username already exists');
         const data = await response.json();
@@ -66,61 +66,61 @@ function SignUpForm() {
   
 
   return (
+    <div>
+    <Navbar />
     <div className="signupform">
        <video src={videobf} autoPlay loop muted id = "myVideo"/>
-      <h1>FILL IT UP TO START YOUR JOURNEY</h1>
-      <form onSubmit={handleSubmit}>
-  <label htmlFor="email" style={{color: 'white'}}>
-    Email
-  </label>
-  <input
-    type="email"
-    name="email"
-    className="form-control"
-    placeholder="Enter your Email"
-    required
-  />
-  <label htmlFor="username" style={{color: 'white'}}>
-    Username
-  </label>
-  <input
-    type="text"
-    name="username"
-    className="form-control"
-    placeholder="Enter username"
-    required
-  />
-  <label htmlFor="password">Password</label>
-  <input
-    type="password"
-    name="password"
-    className="form-control"
-    placeholder="Password"
-    required
-  />
-  <label htmlFor="password">Re-type Password</label>
-  <input
-    type="password"
-    name="password2"
-    className="form-control"
-    placeholder="Re-type Old Password"
-    required
-  />
-  <button type="submit" className="btn btn-primary text-left">
-    Submit
-  </button>
-  <p>
-    {' '}
-    <Link to="/login" className="transition-link">
-      existing user?
-    </Link>{' '}
-  </p>
-  {signinError && <p className="error-message">{signinError}</p>}
-  
-</form>
-
-
-  </div>
+       <h1>FILL IT UP TO START YOUR JOURNEY</h1>
+        <form onSubmit={handleSubmit}>
+         <label htmlFor="email">
+         Email
+         </label>
+         <input
+           type="email"
+           name="email"
+           className="form-control"
+           placeholder="Enter your Email"
+           required
+         />
+         <label htmlFor="username">
+           Username
+         </label>
+         <input
+           type="text"
+           name="username"
+           className="form-control"
+           placeholder="Enter username"
+           required
+         />
+         <label htmlFor="password">Password</label>
+         <input
+           type="password"
+           name="password"
+           className="form-control"
+           placeholder="Password"
+           required
+         />
+         <label htmlFor="password">Re-type Password</label>
+         <input
+           type="password"
+           name="password2"
+           className="form-control"
+           placeholder="Re-type Old Password"
+           required
+         />
+         <button type="submit" className="btn btn-primary text-left">
+           Submit
+         </button>
+         <p>
+           {' '}
+           <Link to="/login" className="transition-link">
+             existing user?
+           </Link>{' '}
+         </p> 
+         {signinError && <p className="error-message">{signinError}</p>}
+        </form>
+    </div>
+    </div>
 
   )
 }

@@ -3,9 +3,12 @@ import '../App.css';
 import { Button } from './Button';
 import './HeroSection.css';
 import videobg from '../assets/bg_video.mp4'
+import Navbar from './Navbar';
 
 function HeroSection() {
   return (
+    <div>
+    <Navbar />
     <div className='hero-container' >
       <video src={videobg} autoPlay loop muted id = "myVideo"/>
       <h1>MUSIC AWAITS</h1>
@@ -20,6 +23,7 @@ function HeroSection() {
         </Button>
         
       </div>
+    </div>
     </div>
   );
 }

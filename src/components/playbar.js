@@ -35,33 +35,33 @@ function Playbar({ songImage, songTitle, artist, onPlay, onPause, isPlaying, cur
   }, [songTitle]);
   return (
     <div className="playbar-container" >
-      <div className="playbar-song-info">
-         <div className="playbar-song-details">
+        <div className="playbar-song-details">
               <img className="playbar-song-image" src={songImage} alt="Album cover of the current song" />
-              <p className="playbar-song-title">{songTitle}</p>
-              <p className="playbar-song-artist">{artist}</p>
-         </div>
-      </div>
-      <div className="playbar-controls">
-      <p className="playbar-current-time">{formatTime(currentTime)}</p>
-        <input
-         type="range"
-         className="playbar-slider"
-         min={0}
-         max={duration}
-         value={currentTime}
-         onChange={handleSliderChange}
-        />
-       <p className="playbar-duration">{formatTime(duration)}</p>
-        
-        <div className='playpausebuttons'>
-        {isPlaying ? (
-          <Icon className = "playbutton" path={mdiPauseCircle} size={2} onClick={handlePause} /> // Use handlePause for pause button
-        ) : (
-          <Icon className = "pausebutton" path={mdiPlayCircle} size={2} onClick={handlePlay} /> // Use handlePlay for play button
-        )}
+              <div className='playbar-song-text'>
+                  <p className="playbar-song-title">{songTitle}</p>
+                  <p className="playbar-song-artist">{artist}</p>
+              </div>
         </div>
-      </div>
+        <div className="playbar-controls">
+          <p className="playbar-current-time">{formatTime(currentTime)}</p>
+            <input
+             type="range"
+             className="playbar-slider"
+             min={0}
+             max={duration}
+             value={currentTime}
+             onChange={handleSliderChange}
+            />
+           <p className="playbar-duration">{formatTime(duration)}</p>
+            
+            <div className='playpausebuttons'>
+            {isPlaying ? (
+              <Icon className = "playbutton" path={mdiPauseCircle} size={2} onClick={handlePause} /> // Use handlePause for pause button
+            ) : (
+              <Icon className = "pausebutton" path={mdiPlayCircle} size={2} onClick={handlePlay} /> // Use handlePlay for play button
+            )}
+            </div>
+        </div>
     </div>
   );
 }

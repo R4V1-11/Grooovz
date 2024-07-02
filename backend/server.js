@@ -2,12 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const authenticateToken = require('./middleware/jwtAuth');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/grooovz_users', {
+mongoose.connect('mongodb://localhost:27017/grooovz_users', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -27,8 +29,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
-  password: String,
-  email: String
+  password: {type:String, required :true},
+  email: {type:String, required: true}
 });
 
 // create a model for your user collection
@@ -64,7 +66,7 @@ async function checkPassword(password, hash) {
     throw error;
   }
 }
-
+//for signup
 app.post('/api/users', async (req, res) => {
   console.log("server receiving data from client"); // check if the server is receiving data from the client-side code
   const { username, password, email } = req.body;
@@ -93,7 +95,7 @@ app.post('/api/users', async (req, res) => {
 
   }
 });
-
+//for login
 app.post('/api/login2', async (req, res) => {
   console.log("server receiving data from client login api used");
   const { username, password } = req.body;
@@ -106,14 +108,17 @@ app.post('/api/login2', async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ status: 'error', message: 'Invalid username or password' });
     }
-    return res.status(200).json({ status: 'success', message: 'User authenticated successfully' });
+
+    const token = jwt.sign({username:user.username},'a1B2c3D4',{expiresIn : "7d" });
+
+    return res.status(200).json({ status: 'success', message: 'User authenticated successfully',token });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ status: 'error', message: 'Error authenticating user' });
   }
 });
 
-app.get('/', (req, res) => {
+app.get('/protected-route', authenticateToken, (req, res) => {
   res.send('Hello, World!');
 });
 
